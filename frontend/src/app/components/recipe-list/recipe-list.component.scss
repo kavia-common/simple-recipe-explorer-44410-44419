@@ -1,0 +1,198 @@
+.recipe-list-container {
+  width: 100%;
+}
+
+.recipes-content {
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+  }
+}
+
+// Loading State Styles
+.loading-state {
+  .loading-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    
+    .loading-card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      
+      .loading-image {
+        height: 240px;
+        background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+      
+      .loading-content {
+        padding: 1.5rem;
+        
+        .loading-title {
+          height: 1.5rem;
+          background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+          background-size: 200% 100%;
+          border-radius: 4px;
+          margin-bottom: 0.75rem;
+          animation: shimmer 1.5s infinite;
+        }
+        
+        .loading-description {
+          height: 2.5rem;
+          background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+          background-size: 200% 100%;
+          border-radius: 4px;
+          margin-bottom: 1rem;
+          animation: shimmer 1.5s infinite;
+        }
+        
+        .loading-meta {
+          height: 1rem;
+          width: 60%;
+          background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+          background-size: 200% 100%;
+          border-radius: 4px;
+          animation: shimmer 1.5s infinite;
+        }
+      }
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// Error State Styles
+.error-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem;
+  
+  .error-content {
+    text-align: center;
+    max-width: 400px;
+    
+    .error-icon {
+      color: #EF4444;
+      margin-bottom: 1.5rem;
+      
+      svg {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+    
+    .error-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 1rem;
+    }
+    
+    .error-message {
+      color: #6b7280;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .retry-btn {
+      background: #2563EB;
+      color: #ffffff;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+      
+      &:focus {
+        outline: 2px solid #2563EB;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+// Empty State Styles
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem;
+  
+  .empty-content {
+    text-align: center;
+    max-width: 400px;
+    
+    .empty-icon {
+      color: #9ca3af;
+      margin-bottom: 1.5rem;
+      
+      svg {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+    
+    .empty-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 1rem;
+    }
+    
+    .empty-message {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .recipes-content .recipes-grid,
+  .loading-state .loading-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .error-state,
+  .empty-state {
+    min-height: 300px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-state .loading-grid .loading-card .loading-content {
+    padding: 1rem;
+  }
+}

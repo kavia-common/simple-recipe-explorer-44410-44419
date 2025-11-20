@@ -1,0 +1,21 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <h1 id="hero-title" class="hero-title">{{ title }}</h1>
+      <p class="hero-subtitle">{{ subtitle }}</p>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section class="search-section" aria-labelledby="search-heading">
+    <h2 id="search-heading" class="sr-only">Search and Filter Recipes</h2>
+    <app-recipe-search></app-recipe-search>
+  </section>
+
+  <!-- Recipes Section -->
+  <section class="recipes-section" aria-labelledby="recipes-heading">
+    <h2 id="recipes-heading" class="sr-only">Recipe Collection</h2>
+    <app-recipe-list></app-recipe-list>
+  </section>
+</div>

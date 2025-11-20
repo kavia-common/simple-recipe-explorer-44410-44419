@@ -26,10 +26,17 @@ export default [
         it: "readonly",
         expect: "readonly",
         // Browser globals
+        window: "readonly",
+        document: "readonly",
         HTMLElement: "readonly",
+        HTMLImageElement: "readonly",
+        Event: "readonly",
+        EventTarget: "readonly",
         // Node.js globals
         process: "readonly",
-        console: "readonly"
+        console: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly"
       }
     },
     rules: {

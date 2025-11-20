@@ -1,0 +1,194 @@
+<div class="recipe-detail-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state" role="status" aria-label="Loading recipe details">
+    <div class="loading-header">
+      <div class="loading-back-btn"></div>
+      <div class="loading-title"></div>
+    </div>
+    <div class="loading-content">
+      <div class="loading-image"></div>
+      <div class="loading-info">
+        <div class="loading-meta"></div>
+        <div class="loading-description"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="hasError && !isLoading" class="error-state" role="alert">
+    <div class="error-content">
+      <div class="error-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v2h-2v-2zm0-12h2v10h-2V5z"/>
+        </svg>
+      </div>
+      <h1 class="error-title">Recipe Not Found</h1>
+      <p class="error-message">
+        The recipe you're looking for doesn't exist or has been removed.
+      </p>
+      <p class="error-redirect">
+        Redirecting you back to the recipe list...
+      </p>
+      <button 
+        type="button" 
+        class="back-btn"
+        (click)="goBack()"
+        aria-label="Go back to recipe list"
+      >
+        Back to Recipes
+      </button>
+    </div>
+  </div>
+
+  <!-- Recipe Details -->
+  <div *ngIf="!isLoading && !hasError && (recipe$ | async) as recipe" class="recipe-content">
+    <!-- Header with back button -->
+    <header class="recipe-header">
+      <button 
+        type="button"
+        class="back-button" 
+        (click)="goBack()"
+        aria-label="Go back to recipe list"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 12H5m7-7l-7 7 7 7"/>
+        </svg>
+        Back to Recipes
+      </button>
+    </header>
+
+    <!-- Recipe Hero Section -->
+    <div class="recipe-hero">
+      <div class="hero-image-container">
+        <img 
+          [src]="recipe.image" 
+          [alt]="recipe.title"
+          class="hero-image"
+          (error)="onImageError($event)"
+        />
+        <div class="difficulty-badge" [class]="getDifficultyColor(recipe.difficulty)">
+          {{ recipe.difficulty }}
+        </div>
+      </div>
+      
+      <div class="hero-content">
+        <h1 class="recipe-title">{{ recipe.title }}</h1>
+        <p class="recipe-description">{{ recipe.description }}</p>
+        
+        <div class="recipe-meta-grid">
+          <div class="meta-item">
+            <div class="meta-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Prep Time</span>
+              <span class="meta-value">{{ recipe.prepTime }} min</span>
+            </div>
+          </div>
+          
+          <div class="meta-item">
+            <div class="meta-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Cook Time</span>
+              <span class="meta-value">{{ recipe.cookTime }} min</span>
+            </div>
+          </div>
+          
+          <div class="meta-item">
+            <div class="meta-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+              </svg>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Servings</span>
+              <span class="meta-value">{{ recipe.servings }}</span>
+            </div>
+          </div>
+          
+          <div class="meta-item">
+            <div class="meta-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Total Time</span>
+              <span class="meta-value">{{ getTotalTime(recipe) }} min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-tags" *ngIf="recipe.tags && recipe.tags.length > 0">
+          <span 
+            class="recipe-tag" 
+            *ngFor="let tag of recipe.tags"
+            [attr.aria-label]="'Tag: ' + tag"
+          >
+            {{ tag }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe Details Section -->
+    <div class="recipe-details">
+      <div class="details-grid">
+        <!-- Ingredients -->
+        <section class="ingredients-section" aria-labelledby="ingredients-heading">
+          <h2 id="ingredients-heading" class="section-title">
+            <svg class="section-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/>
+            </svg>
+            Ingredients
+          </h2>
+          <ul class="ingredients-list" role="list">
+            <li 
+              class="ingredient-item" 
+              *ngFor="let ingredient of recipe.ingredients"
+              role="listitem"
+            >
+              <span class="ingredient-amount">{{ ingredient.amount }} {{ ingredient.unit }}</span>
+              <span class="ingredient-name">{{ ingredient.name }}</span>
+              <span class="ingredient-notes" *ngIf="ingredient.notes">({{ ingredient.notes }})</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Instructions -->
+        <section class="instructions-section" aria-labelledby="instructions-heading">
+          <h2 id="instructions-heading" class="section-title">
+            <svg class="section-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            Instructions
+          </h2>
+          <ol class="instructions-list" role="list">
+            <li 
+              class="instruction-item" 
+              *ngFor="let instruction of recipe.instructions"
+              role="listitem"
+            >
+              <div class="instruction-number">{{ instruction.step }}</div>
+              <div class="instruction-content">
+                <p class="instruction-text">{{ instruction.description }}</p>
+                <span class="instruction-duration" *ngIf="instruction.duration">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  {{ instruction.duration }} min
+                </span>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

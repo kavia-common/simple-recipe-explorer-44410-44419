@@ -1,0 +1,99 @@
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, #f9fafb 100%);
+}
+
+.hero-section {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(249, 250, 251, 0.9) 100%);
+  padding: 4rem 1rem 3rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.025em;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+.search-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 0;
+}
+
+.recipes-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+// Screen reader only content
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1rem 2rem;
+    
+    .hero-content {
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+    }
+  }
+  
+  .search-section {
+    padding: 1.5rem 0.75rem 0;
+  }
+  
+  .recipes-section {
+    padding: 0 0.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 0.75rem 1.5rem;
+    
+    .hero-content {
+      .hero-title {
+        font-size: 1.875rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<div class="search-container">
+  <div class="search-main">
+    <div class="search-input-wrapper">
+      <div class="search-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search recipes, ingredients..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput($any($event.target)?.value || '')"
+        aria-label="Search recipes and ingredients"
+      />
+      <button 
+        type="button"
+        class="filter-toggle-btn"
+        (click)="toggleFilters()"
+        [class.active]="isFilterExpanded"
+        [attr.aria-expanded]="isFilterExpanded"
+        aria-controls="advanced-filters"
+        aria-label="Toggle advanced filters"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div 
+    class="advanced-filters"
+    [class.expanded]="isFilterExpanded"
+    id="advanced-filters"
+    role="region"
+    aria-labelledby="filter-heading"
+  >
+    <h3 id="filter-heading" class="sr-only">Advanced Filters</h3>
+    
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="difficulty-select" class="filter-label">Difficulty</label>
+        <select
+          id="difficulty-select"
+          class="filter-select"
+          [(ngModel)]="selectedDifficulty"
+          (change)="onDifficultyChange()"
+        >
+          <option *ngFor="let difficulty of difficulties" [value]="difficulty">
+            {{ difficulty }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="prep-time-select" class="filter-label">Prep Time</label>
+        <select
+          id="prep-time-select"
+          class="filter-select"
+          [(ngModel)]="maxPrepTime"
+          (change)="onPrepTimeChange()"
+        >
+          <option *ngFor="let option of prepTimeOptions" [ngValue]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-actions">
+        <button
+          type="button"
+          class="clear-btn"
+          (click)="clearFilters()"
+          aria-label="Clear all filters"
+        >
+          Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

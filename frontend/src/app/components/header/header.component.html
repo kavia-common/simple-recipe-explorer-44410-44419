@@ -1,0 +1,26 @@
+<header class="header">
+  <div class="header-container">
+    <div class="header-content">
+      <div class="logo-section">
+        <a routerLink="/" class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="currentColor" aria-label="Recipe book icon">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          <span class="logo-text">{{ title }}</span>
+        </a>
+      </div>
+      
+      <nav class="navigation" role="navigation" aria-label="Main navigation">
+        <a 
+          routerLink="/" 
+          routerLinkActive="active" 
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          aria-label="Browse all recipes"
+        >
+          Browse Recipes
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

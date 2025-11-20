@@ -1,0 +1,65 @@
+<div class="recipe-list-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state" role="status" aria-label="Loading recipes">
+    <div class="loading-grid">
+      <div class="loading-card" *ngFor="let item of [1,2,3,4,5,6]" aria-hidden="true">
+        <div class="loading-image"></div>
+        <div class="loading-content">
+          <div class="loading-title"></div>
+          <div class="loading-description"></div>
+          <div class="loading-meta"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="hasError && !isLoading" class="error-state" role="alert">
+    <div class="error-content">
+      <div class="error-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v2h-2v-2zm0-12h2v10h-2V5z"/>
+        </svg>
+      </div>
+      <h2 class="error-title">Unable to Load Recipes</h2>
+      <p class="error-message">
+        We're having trouble loading recipes right now. Please check your connection and try again.
+      </p>
+      <button 
+        type="button" 
+        class="retry-btn"
+        (click)="retryLoad()"
+        aria-label="Retry loading recipes"
+      >
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Recipe Grid -->
+  <div *ngIf="!isLoading && !hasError" class="recipes-content">
+    <div class="recipes-grid" *ngIf="recipes$ | async as recipes">
+      <!-- Empty State -->
+      <div *ngIf="recipes.length === 0" class="empty-state">
+        <div class="empty-content">
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <h2 class="empty-title">No Recipes Found</h2>
+          <p class="empty-message">
+            Try adjusting your search criteria or clear your filters to see more recipes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Recipe Cards -->
+      <app-recipe-card 
+        *ngFor="let recipe of recipes; trackBy: trackByRecipeId"
+        [recipe]="recipe"
+        class="recipe-card-item"
+      ></app-recipe-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<article class="recipe-card" [attr.aria-label]="'Recipe: ' + recipe.title">
+  <div class="card-link-wrapper">
+    <a [routerLink]="['/recipe', recipe.id]" class="card-link" [attr.aria-label]="'View recipe: ' + recipe.title">
+      <div class="image-container">
+        <img 
+          [src]="recipe.image" 
+          [alt]="recipe.title"
+          class="recipe-image"
+          (error)="onImageError($event)"
+          loading="lazy"
+        />
+        <div class="difficulty-badge" [class]="getDifficultyColor(recipe.difficulty)">
+          {{ recipe.difficulty }}
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="recipe-title">{{ recipe.title }}</h3>
+          <p class="recipe-description">{{ recipe.description }}</p>
+        </div>
+
+        <div class="recipe-meta">
+          <div class="meta-group">
+            <div class="meta-item">
+              <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              <span class="meta-text">{{ getTotalTime() }} min</span>
+            </div>
+            
+            <div class="meta-item">
+              <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+              </svg>
+              <span class="meta-text">{{ recipe.servings }} servings</span>
+            </div>
+          </div>
+
+          <div class="tags-container" *ngIf="recipe.tags && recipe.tags.length > 0">
+            <span 
+              class="recipe-tag" 
+              *ngFor="let tag of recipe.tags.slice(0, 3)"
+              [attr.aria-label]="'Tag: ' + tag"
+            >
+              {{ tag }}
+            </span>
+            <span 
+              class="tag-more" 
+              *ngIf="recipe.tags.length > 3"
+              [attr.aria-label]="'And ' + (recipe.tags.length - 3) + ' more tags'"
+            >
+              +{{ recipe.tags.length - 3 }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</article>
